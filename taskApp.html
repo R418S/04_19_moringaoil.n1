@@ -38,6 +38,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- 以下にfirebaseのコードを貼り付けよう -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
@@ -46,7 +47,7 @@
 <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    // apiKey: ,
+    apiKey: "AIzaSyBg1c7FqZGFdw99y6DYaUsb2iNp_EVyeK8",
     authDomain: "taskapp-7c5ae.firebaseapp.com",
     databaseURL: "https://taskapp-7c5ae.firebaseio.com",
     projectId: "taskapp-7c5ae",
@@ -56,12 +57,9 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-</script>
-<script>
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore().collection('task19');
 </script>
+
 
 <script>
     // 日時をいい感じの形式にする関数
@@ -77,46 +75,41 @@
     }
 
     // データベースの設定を記述
-
-
-    // 送信ボタンクリック時にデータを送信する処理
-   
-    $('#send').on('click',function(){
+    $('#send').on('click',() => {
       const data = {
         name: $('#name').val(),
         text: $('#text').val(),
         time: firebase.firestore.FieldValue.serverTimestamp(),
       };
       db.add(data);
+      $('#name').val('');
       $('#text').val('');
     });
-
+    // 送信ボタンクリック時にデータを送信する処理
     // データをリアルタイムに取得する処理
-    db.orderBy('time', 'desc').onSnapshot(function (querySnapshot) {
+    db.orderBy('time', 'desc').onSnapshot((querySnapshot) => {
       // まずはconsole.log()で出力してデータの形を確認！
-      const dataArray = []; // 必要なデータだけが入った新しい配列を作成
-      querySnapshot.docs.forEach(function (doc) {
+      const dataArray = [];
+      querySnapshot.docs.forEach((doc) => {
       const data = {
-      id: doc.id, 
-      data: doc.data(),
-    };
-dataArray.push(data);
-});
-console.log(dataArray);
-
-const tagArray = [];
-dataArray.forEach(function(data){
-  const tag = `
-  <li id="${data.id}">
-    <p>${data.data.name}</p>
-    <p>${data.data.text}</p>
-    <p>${convertFromFirestoreTimestampToDatetime(data.data.time.seconds)}</p>
-  </li>
-`;
-tagArray.push(tag);
-});
-$('#output').html(tagArray);
-});
+        id: doc.id,
+        data: doc.data(),
+      };
+      dataArray.push(data);
+    });
+      const tagArray = [];
+      dataArray.forEach((data) => {
+        const tag = `
+        <li id=“${data.id}“>
+        <p>${data.data.name}</p>
+        <p>${data.data.text}</p>
+        <p>${convertFromFirestoreTimestampToDatetime(data.data.time.seconds)}</p>
+        </li>
+        `;
+        tagArray.push(tag);
+      });
+      $('#output').html(tagArray);
+    });
   </script>
- </body>
+</body>
 </html>
