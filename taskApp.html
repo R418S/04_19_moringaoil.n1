@@ -6,19 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>chatApp</title>
-  <style>
-    #output li {
-      background: #ccc;
-    }
-  </style>
+  <link rel="stylesheet" href="second.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 
 <body>
-  <h1>Realtime Chat</h1>
-  
-  <h1>お名前を入れて、ご質問をどうぞ。</h1>
+  <header>
+      <img class="img-fluid" src="jpg/info.jpg">
+</header>
+<head>
+  <h3>お名前を入れて、ご質問をどうぞ。</h3>
   <!-- 入力場所を作成しよう -->
-  <ul>
+<!-- お名前入力欄 -->
+  <div class="form-group">
+     <label class="col-sm-3 control-label" for="name">お名前</label>
+  <div class="col-sm-6">
+    <input type="text" class="form-control" name="">
+  </div>
+  </div>
+<!-- お問い合わせ内容 -->
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="ask1">お問い合わせ内容</label>
+  <div class="col-sm-6">
+  <textarea rows="7" name="" class="form-control"></textarea>
+  </div>
+  </div>
+  <div>
+    <button id="send">send</button>
+  </div>
+   
+  <!-- <ul>
     <li>
     <label for="name">お名前</label>
     <input type="text" id="name">
@@ -29,15 +46,17 @@
     <li>
     <button id="send">send</button>
     </li>
-  </ul>
+  </ul> -->
   <p>
     <a href="index.html">戻る</a>
   </p>
   <!-- データ出力場所 -->
-  <ul id="output"></ul>
+  <div id="output"></div>
+  <!-- <ul id="output"></ul> -->
+</head>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- 以下にfirebaseのコードを貼り付けよう -->
+<!-- 以下にfirebaseのコードを貼り付けよう -->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase.js"></script>
 
@@ -47,7 +66,7 @@
 <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: "AIzaSyBg1c7FqZGFdw99y6DYaUsb2iNp_EVyeK8",
+    apiKey:"AIzaSyBg1c7FqZGFdw99y6DYaUsb2iNp_EVyeK8",
     authDomain: "taskapp-7c5ae.firebaseapp.com",
     databaseURL: "https://taskapp-7c5ae.firebaseio.com",
     projectId: "taskapp-7c5ae",
@@ -100,16 +119,16 @@
       const tagArray = [];
       dataArray.forEach((data) => {
         const tag = `
-        <li id=“${data.id}“>
+        <div id=“${data.id}“>
         <p>${data.data.name}</p>
         <p>${data.data.text}</p>
         <p>${convertFromFirestoreTimestampToDatetime(data.data.time.seconds)}</p>
-        </li>
+        </div>
         `;
         tagArray.push(tag);
       });
       $('#output').html(tagArray);
     });
   </script>
-</body>
+ </body>
 </html>
