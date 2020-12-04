@@ -15,25 +15,33 @@
       <img class="img-fluid" src="jpg/info.jpg">
 </header>
 <head>
-  <h3>お名前を入れて、ご質問をどうぞ。</h3>
+  <h4>お名前を入れて、ご質問をどうぞ。</h4>
   <!-- 入力場所を作成しよう -->
 <!-- お名前入力欄 -->
+<ul style="list-style:none;">
+<li>
   <div class="form-group">
      <label class="col-sm-3 control-label" for="name">お名前</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="">
+    <input type="text" id="name" class="form-control" name="">
   </div>
   </div>
+</li>
+
 <!-- お問い合わせ内容 -->
+<li>
   <div class="form-group">
     <label class="col-sm-3 control-label" for="ask1">お問い合わせ内容</label>
   <div class="col-sm-6">
-  <textarea rows="7" name="" class="form-control"></textarea>
+  <textarea rows="7" name="" id="text" class="form-control"></textarea>
   </div>
   </div>
-  <div>
+</li>
+  <li>
     <button id="send">send</button>
-  </div>
+  </li>
+
+
    
   <!-- <ul>
     <li>
@@ -47,11 +55,13 @@
     <button id="send">send</button>
     </li>
   </ul> -->
-  <p>
+  <li>
     <a href="index.html">戻る</a>
-  </p>
+  </li>
+</ul>
   <!-- データ出力場所 -->
-  <div id="output"></div>
+  <ul id="output"></ul>
+
   <!-- <ul id="output"></ul> -->
 </head>
 
@@ -66,7 +76,7 @@
 <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey:"AIzaSyBg1c7FqZGFdw99y6DYaUsb2iNp_EVyeK8",
+    apiKey:,
     authDomain: "taskapp-7c5ae.firebaseapp.com",
     databaseURL: "https://taskapp-7c5ae.firebaseio.com",
     projectId: "taskapp-7c5ae",
@@ -76,7 +86,7 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore().collection('task19');
+  // const db = firebase.firestore().collection('task19');
 </script>
 
 
@@ -94,15 +104,18 @@
     }
 
     // データベースの設定を記述
-    $('#send').on('click',() => {
-      const data = {
+    const db = firebase.firestore().collection('chat')
+    $('#send').on('click',function(){
+    // $('#send').on('click',() => {
+    //   const data = {
+      db.add({
         name: $('#name').val(),
         text: $('#text').val(),
         time: firebase.firestore.FieldValue.serverTimestamp(),
-      };
-      db.add(data);
-      $('#name').val('');
-      $('#text').val('');
+      });
+      // db.add(data);
+      // $('#name').val('');
+      // $('#text').val('');
     });
     // 送信ボタンクリック時にデータを送信する処理
     // データをリアルタイムに取得する処理
